@@ -17,6 +17,7 @@
         somedl = pkgs.callPackage ./somedl.nix { };
         deserted-fonts = pkgs.callPackage ./deserted-fonts.nix { };
         ioskeley = pkgs.callPackage ./ioskeley.nix { };
+        horse = pkgs.callPackage ./horse.nix { };
       };
 
       nixosModules.somedl =
