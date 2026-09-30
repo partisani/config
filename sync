@@ -1,0 +1,30 @@
+#!/usr/bin/env lua
+
+local lib = require "lib"
+
+local init = require "init"
+local files = init.files
+
+lib.log "title" ("syncing files")
+
+for path, dirent in pairs(files) do
+    lib.log "trace" ("%s", path)
+
+    if type(dirent) == "table" then
+        if path:match("/$") then path = path:sub(1, -2) end
+        for file, content in pairs(dirent) do
+            lib.log "inert" ("    %s", file)
+            lib.assert(write(path .. "/" .. file, content))
+        end
+        goto next
+    end
+
+    if type(dirent) == "string" then
+        lib.assert(lib.write(path, dirent))
+        goto next
+    end
+
+    lib.log "error" ("invalid dirent for %s", path)
+
+    ::next::
+end

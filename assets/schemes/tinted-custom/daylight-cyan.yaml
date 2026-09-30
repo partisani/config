@@ -1,0 +1,30 @@
+system: "base16"
+name: "Daylight Cyan"
+author: "partisani"
+description: "DORFIC * -1"
+variant: "dark"
+palette:
+    base00: "#e3dcd5"
+    base01: "#c8c1ba"
+    base02: "#aea7a0"
+    base03: "#948e86"
+    base04: "#7c756e"
+    base05: "#645d56"
+    base06: "#4d473f"
+    base07: "#37312a"
+    base08: "#74baba"
+    base09: "#69b7b7"
+    base0A: "#5cb4b4"
+    base0B: "#4fb1b1"
+    base0C: "#40adae"
+    base0D: "#2caaab"
+    base0E: "#e71e7b"
+    base0F: "#08a7a8"
+
+
+
+
+
+
+
+

@@ -1,0 +1,6 @@
+[submodule "assets/schemes/gogh"]
+	path = assets/schemes/gogh
+	url = https://github.com/Gogh-Co/Gogh
+[submodule "assets/schemes/tinted-schemes"]
+	path = assets/schemes/tinted-schemes
+	url = https://github.com/tinted-theming/tinted-schemes

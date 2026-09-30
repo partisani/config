@@ -1,0 +1,32 @@
+# blue-ish version of the theme, pure dark background
+# hellwal = mkSch (
+#   local-lib.schemes.hellwalToBase16 ../assets/wallpapers/gensokyo-girl-stars.png [
+#     "neon-mode"
+#     "dark"
+#   ]
+#   |> builtins.readFile
+#   |> builtins.fromJSON
+# );
+#
+system: "base16"
+name: "lapis"
+author: "partisani"
+description: "<null>"
+variant: "dark"
+palette:
+   base00: "#293644"
+   base01: "#7c6761"
+   base02: "#7b8391"
+   base03: "#8f797c"
+   base04: "#678da8"
+   base05: "#6e8398"
+   base06: "#927f7d"
+   base07: "#ece6e1"
+   base08: "#4c5863"
+   base09: "#7c6761"
+   base0A: "#7b8391"
+   base0B: "#8f797c"
+   base0C: "#678da8"
+   base0D: "#6e8398"
+   base0E: "#927f7d"
+   base0F: "#ece6e1"
