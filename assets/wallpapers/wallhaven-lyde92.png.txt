@@ -1,0 +1,10 @@
+background	182828
+foreground	84979c
+accent0	cf3d3d
+accent1	5a7177
+accent2	5c7880
+accent3	3c575f
+accent4	435b5c
+accent5	7f787a
+accent6	b5605b
+accent7	3c6671

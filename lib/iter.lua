@@ -62,22 +62,64 @@ end
 
 -- derived iterators
 
-function iter:map(fn)
+function iter:map(fn, ...)
     return iter.new(function(state)
         local values = { state.from:next() }
         if #values == 0 then return end
-        return fn(table.unpack(values))
-    end, { from = self })
+
+        local args = { table.unpack(state.args) }
+        for _, x in ipairs(values) do
+            table.insert(args, x)
+        end
+
+        return fn(table.unpack(args))
+    end, { from = self, args = {...} })
+end
+
+function iter:inspect(fn, ...)
+    return iter.new(function(state)
+        local values = { state.from:next() }
+        if #values == 0 then return end
+
+        local args = { table.unpack(state.args) }
+        for _, x in ipairs(values) do
+            table.insert(args, x)
+        end
+
+        fn(table.unpack(args))
+
+        return table.unpack(args)
+    end, { from = self, args = {...} })
+end
+
+function iter:flatten()
+    return iter.new(function(state)
+        -- if queue, return from queue
+        if #state.queue ~= 0 then return table.remove(state.queue, 1) end
+
+        local results = { state.from:next() }
+        if #results == 0 then return end
+
+        local ret = table.remove(results, 1)
+        -- items remain, add to queue
+        if #results ~= 0 then
+            for _, x in ipairs(results) do
+                table.insert(state.queue, x)
+            end
+        end
+
+        return ret
+    end, { from = self, queue = {} })
 end
 
 function iter:filter(fn)
     return iter.new(function(state)
         while true do
-            local next = state.from:next()
+            local results = { state.from:results() }
             -- if iterator ends early
-            if next == nil then return end
-            local computed = fn(next)
-            if computed then return next end
+            if #results == 0 then return end
+            local computed = fn(table.unpack(results))
+            if computed then return table.unpack(results) end
         end
     end, { from = self })
 end
@@ -88,13 +130,6 @@ function iter:foreach(fn)
         if #results == 0 then return end
         fn(table.unpack(results))
     end
-end
-
--- iterators from other values
-
---- @param s string
-function string.lines(s)
-    return s:gmatch("[^\n]-")
 end
 
 return iter

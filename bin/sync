@@ -1,0 +1,32 @@
+#!/usr/bin/env lua
+
+local lib = require "lib"
+
+local init = require "init"
+local files = init.files
+
+local out = {}
+
+local function walk(tbl, prefix, depth)
+    prefix = prefix or ""
+    depth = depth or 0
+
+    for k, v in pairs(tbl) do
+        if k:sub(1, 2) == "__" then goto skip end
+
+        local path = prefix .. "/" .. k
+        local def = "%s%s"
+        if type(v) ~= "string" then
+            lib.log "title" (def .. "/", ("  "):rep(depth), k)
+            walk(v, path, depth + 1)
+            goto skip
+        end
+
+        lib.log "trace" (def .. " len: %d", ("  "):rep(depth), k, #v)
+        lib.assert(lib.write(path, v))
+
+        ::skip::
+    end
+end
+
+walk(files)

@@ -1,0 +1,126 @@
+#: Fonts {{{
+
+font_family      monospace
+bold_font        auto
+italic_font      auto
+bold_italic_font auto
+
+font_size 9.0
+
+#text_fg_override_threshold 3.0
+#text_composition_strategy legacy
+
+#: }}}
+
+#: Text cursor customization {{{
+
+cursor #{ return conf.scheme.base02 'hex' }
+cursor_text_color #{ return conf.scheme.base07 'hex' }
+
+cursor_blink_interval 0.5 ease-in-out
+
+cursor_trail 17
+cursor_trail_start_threshold 0
+
+#: }}}
+
+#: Window layout {{{
+
+remember_window_size  no
+initial_window_width  800
+initial_window_height 600
+
+#window_padding_width 32
+window_padding_width 8
+resize_in_steps yes
+
+padding_fill_strategy neighboring_cell
+
+confirm_os_window_close 999
+
+hide_window_decorations titlebar-only
+
+#: }}}
+
+#: Color scheme {{{
+
+foreground #{ return conf.scheme.base05 'hex' }
+background #{ return conf.scheme.base00 'hex' }
+
+background_opacity 1
+background_blur 1
+
+selection_foreground none
+selection_background none
+
+palette_generate semantic
+
+#: The color table {{{
+
+#: black
+
+color0 #{ return conf.scheme.base00 'hex' }
+color8 #{ return conf.scheme.base01 'hex' }
+#: red
+
+color1 #{ return conf.scheme.base08 'hex' }
+color9 #{ return conf.scheme.base12 'hex' }
+#: green
+
+color2  #{ return conf.scheme.base0B 'hex' }
+color10 #{ return conf.scheme.base14 'hex' }
+#: yellow
+
+color3  #{ return conf.scheme.base0A 'hex' }
+color11 #{ return conf.scheme.base13 'hex' }
+#: blue
+
+color4  #{ return conf.scheme.base0D 'hex' }
+color12 #{ return conf.scheme.base16 'hex' }
+#: magenta
+
+color5  #{ return conf.scheme.base0E 'hex' }
+color13 #{ return conf.scheme.base17 'hex' }
+#: cyan
+
+color6  #{ return conf.scheme.base0C 'hex' }
+color14 #{ return conf.scheme.base15 'hex' }
+#: white
+
+color7  #{ return conf.scheme.base05 'hex' }
+color15 #{ return conf.scheme.base07 'hex' }
+
+# mark1_foreground black
+
+#: Color for marks of type 1
+
+# mark1_background #98d3cb
+
+#: Color for marks of type 1 (light steel blue)
+
+# mark2_foreground black
+
+#: Color for marks of type 2
+
+# mark2_background #f2dcd3
+
+#: Color for marks of type 2 (beige)
+
+# mark3_foreground black
+
+#: Color for marks of type 3
+
+# mark3_background #f274bc
+
+#: Color for marks of type 3 (violet)
+
+#: }}}
+
+#: }}}
+
+#: Keybinds {{{
+
+map ctrl+enter new_os_window_with_cwd
+map ctrl+shift+t new_tab_with_cwd
+
+#: }}}

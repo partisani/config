@@ -1,0 +1,10 @@
+background	5b7396
+foreground	feeecd
+accent0	fdc69d
+accent1	e1b5a7
+accent2	fbc290
+accent3	74a4ca
+accent4	b1b7cd
+accent5	5f9bc4
+accent6	a391a2
+accent7	ac839d

@@ -1,0 +1,10 @@
+background	060a26
+foreground	4cb1ea
+accent0	f3e769
+accent1	cc9141
+accent2	e5df29
+accent3	0ec5ff
+accent4	0492fe
+accent5	1357ea
+accent6	1e1fc7
+accent7	2714ac

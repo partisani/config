@@ -68,10 +68,14 @@
                 ripgrep
                 git
                 colorpanes
-                ufetch
+                fetch
                 nixfmt
                 jq
                 gh
+                watchexec
+                lutgen
+                matugen
+                xsel
                 pkgs-next.devenv
               ];
 
@@ -93,6 +97,7 @@
                   "wheel"
                   "input"
                   "gamemode"
+                  "video"
                 ];
               };
 
@@ -110,7 +115,7 @@
                   MUSIC = "$HOME/files/music";
                   PICTURES = "$HOME/files/pictures";
                   VIDEOS = "$HOME/files/videos";
-                  PROJECTS = "$HOME/files/projects";
+                  PROJECTS = "$HOME/src";
                 };
               };
 
@@ -119,12 +124,23 @@
           )
           (
             # apps #
-            { pkgs, ... }:
+            { pkgs, local-pkgs, ... }:
             {
               programs.firefox.enable = true;
+              programs.wayland.miracle-wm.enable = true;
+              
+              services.xserver = {
+                enable = true;
+                windowManager.fvwm3.enable = true;
+                enableTearFree = true;
+              };
+
+              services.libinput.mouse.middleEmulation = false;
               
               environment.systemPackages = with pkgs; [
-                alacritty
+                xinit # i changed
+                
+                kitty
                 
                 kakoune
                 kakoune-lsp
@@ -132,6 +148,8 @@
                 remmina
                 
                 vesktop
+                
+                local-pkgs.horse
               ];
             }
           )
@@ -244,6 +262,7 @@
                 kid3-cli
                 moreutils
                 imagemagick
+                playerctl
               ];
 
               services.syncthing = {
@@ -256,7 +275,7 @@
           )
           (
             # games #
-            { pkgs, ... }:
+            { pkgs, pkgs-stable, ... }:
 
             {
               environment.systemPackages = with pkgs; [
@@ -268,7 +287,7 @@
                 temurin-bin-21
 
                 # native games
-                #mindustry
+                mindustry
                 vkquake
 
                 # guess why?
@@ -350,44 +369,7 @@
                 alsa.enable = true;
                 alsa.support32Bit = true;
                 pulse.enable = true;
-                # Bluetooth?
-                #wireplumber.extraConfig."10-bluez" = {
-                #    "monitor.bluez.properties" = {
-                #      "bluez5.enable-sbc-xq" = true;
-                #      "bluez5.enable-msbc" = true;
-                #      "bluez5.enable-hw-volume" = true;
-                #      "bluez5.roles" = [
-                #        "hsp_hs"
-                #        "hsp_ag"
-                #        "hfp_hf"
-                #        "hfp_ag"
-                #      ];
-                #    };
-                #};
-                # If you want to use JACK applications, uncomment this
-                #jack.enable = true;
               };
-
-              environment.systemPackages = with pkgs; [
-                playerctl
-              ];
-
-              # Some programs need SUID wrappers, can be configured further or are
-              # started in user sessions.
-              # programs.mtr.enable = true;
-              # programs.gnupg.agent = {
-              #     enable = true;
-              #     enableSSHSupport = true;
-              # };
-
-              # List services that you want to enable:
-
-              # Enable the OpenSSH daemon.
-              # services.openssh.enable = true;
-
-              # Open ports in the firewall.
-              # networking.firewall.allowedTCPPorts = [ ... ];
-              # networking.firewall.allowedUDPPorts = [ ... ];
             }
           )
           (

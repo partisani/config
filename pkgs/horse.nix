@@ -11,8 +11,8 @@ buildGoModule {
   src = fetchFromGitHub {
     owner = "if-not-nil";
     repo = "horse";
-    rev = "1f9aa04f6482a297521a83e4042a888ed87cea35";
-    hash = "sha256-6ApGmTVQNpArs7zc3UI1DsKKUmJPTGt/6mZp/ihdU5A=";
+    rev = "26f611a6ee0c3d1c64d6b0a620cd592b8059e95a";
+    hash = "sha256-ABkMhAPqPeMGEqJ6xMjbGIJq5OITV2A66px2B8CB/8U=";
   };
 
   vendorHash = "sha256-Cn1prgHQ8046ziWOBXmX2PlXRDYX8DqwcgYXBz2JPPc=";

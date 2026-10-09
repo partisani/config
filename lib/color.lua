@@ -1,3 +1,5 @@
+local lib = require "lib"
+
 --- @class color rgb color
 --- @field r number
 --- @field g number
@@ -18,7 +20,11 @@ end
 --- @param b number
 --- @return color
 function color.new(r, g, b)
-    return setmetatable({ r = r, g = g, b = b }, {
+    return setmetatable({
+        r = math.floor(r),
+        g = math.floor(g),
+        b = math.floor(b)
+    }, {
         __index = color,
         __call = color.to,
         __tostring = function(self)
@@ -29,6 +35,16 @@ function color.new(r, g, b)
         end,
         __le = function(self, other)
             return self:brightness() <= other:brightness()
+        end,
+        __mul = function(self, other)
+            lib.assert(type(other) == "number",
+                "color.__mul with type ~= number is unimplemented")
+
+            return color.new(
+                self.r * other,
+                self.g * other,
+                self.b * other
+            )
         end
     })
 end
@@ -41,7 +57,7 @@ function color.from_hex(str)
         str = str:sub(2)
     end
 
-    assert(#str == 6, "%s is an invalid hex string", str)
+    lib.assert(#str == 6, "`%s` is an invalid hex string", str)
 
     local r = tonumber(str:sub(1, 2), 16)
     local g = tonumber(str:sub(3, 4), 16)
@@ -56,9 +72,9 @@ end
 --- @param t number
 function color:mix(other, t)
     return color.new(
-        lerp(self.r, other.r, t),
-        lerp(self.g, other.g, t),
-        lerp(self.b, other.b, t)
+        math.floor(lerp(self.r, other.r, t)),
+        math.floor(lerp(self.g, other.g, t)),
+        math.floor(lerp(self.b, other.b, t))
     )
 end
 
@@ -69,6 +85,7 @@ end
 
 --- @alias ColorFormat
 --- | "hex"
+--- | "_hex"
 --- | "rgb"
 --- turns a color back into a desired format.
 --- @param fmt ColorFormat
@@ -79,6 +96,13 @@ function color:to(fmt)
         local g = math.floor(clamp(0, self.g, 255))
         local b = math.floor(clamp(0, self.b, 255))
         return "#" .. ("%02X"):rep(3):format(r, g, b)
+    end
+
+    if fmt == "_hex" then
+        local r = math.floor(clamp(0, self.r, 255))
+        local g = math.floor(clamp(0, self.g, 255))
+        local b = math.floor(clamp(0, self.b, 255))
+        return ("%02X"):rep(3):format(r, g, b)
     end
 
     if fmt == "rgb" then

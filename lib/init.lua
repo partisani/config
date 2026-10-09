@@ -1,8 +1,11 @@
 --- @module 'lib'
-local lib = {
-    color = require "lib.color",
-    iter  = require "lib.iter"
-}
+local lib = {}
+
+if not loaded then
+    loaded = true
+    lib.color = require "lib.color"
+    lib.iter  = require "lib.iter"
+end
 
 local LOGLEVELS = {
     ["title"] = "\x1b[1;32m(@)\x1b[0m\x1b[1m",
@@ -100,6 +103,21 @@ function lib.assert(expr, ...)
         os.exit(1)
     end
     return expr
+end
+
+--- executes command and captures its output
+--- @param command string the command to run
+--- @param raw boolean|nil if the output should be processed
+function lib.capture(command, raw)
+    -- from https://stackoverflow.com/a/326715
+    local f = assert(io.popen(command, 'r'))
+    local s = assert(f:read('*a'))
+    f:close()
+    if raw then return s end
+    s = string.gsub(s, '^%s+', '')
+    s = string.gsub(s, '%s+$', '')
+    s = string.gsub(s, '[\n\r]+', ' ')
+    return s
 end
 
 return lib

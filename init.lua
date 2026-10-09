@@ -1,18 +1,29 @@
 local lib = require "lib"
 
 local toml = (require "tomlua").encode
-local read = lib.read
+local files = setmetatable({}, {
+    __index = function(_, key) return lib.read("files/" .. key) end
+})
 
 local conf = require "conf"
 
-local files = {
-    ["~/.config/fontconfig/fonts.conf"] = read "files/fontconfig",
-    ["~/.config/user-dirs.dirs"] = read "files/userdirs",
-    ["~/.rustfmt.toml"] = read "files/rustfmt",
-    ["~/.clippy.toml"] = read "files/clippy",
-    ["~/.config/alacritty/alacritty.toml"] = toml(conf.alacritty)
+local syncfiles = {
+    [os.getenv "HOME"] = {
+        [".config"] = {
+            ["fontconfig/fonts.conf"]    = files.fontconfig,
+            ["kak/kakrc"]                = files.kakrc,
+            ["kitty/kitty.conf"]         = files.kitty,
+            ["user-dirs.dirs"]           = files.userdirs,
+        },
+        [".rustfmt.toml"] = files.rustfmt,
+        [".clippy.toml"] = files.clippy,
+        [".fvwm"] = {
+            ["config"] = files.fvwm
+        },
+    },
+    __config = { min_depth = 2, }
 }
 
 return {
-    files = files,
+    files = syncfiles,
 }
